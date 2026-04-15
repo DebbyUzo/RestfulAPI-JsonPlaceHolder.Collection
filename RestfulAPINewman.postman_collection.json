@@ -1,0 +1,602 @@
+{
+  "info": {
+    "_postman_id": "ce997d18-f85a-45a2-91ac-3bd7d5fe8e71",
+    "name": "RestfulAPINewman",
+    "description": "A collection for testing the Restful API (https://api.restful-api.dev). Covers full CRUD operations on the /objects endpoint. Organized into Read and Write operation folders. Designed for automated runs via Newman or Postman Monitor.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30769584"
+  },
+  "item": [
+    {
+      "name": "Read Operations",
+      "item": [
+        {
+          "name": "Add a new object",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "// Status 200",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Response time < 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2725);",
+                  "});",
+                  "",
+                  "// Response is valid JSON",
+                  "pm.test(\"Response is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "// Response has required fields",
+                  "pm.test(\"Response has id, name, createdAt, data fields\", function () {",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('name');",
+                  "    pm.expect(jsonData).to.have.property('createdAt');",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "});",
+                  "",
+                  "// id is a non-empty string",
+                  "pm.test(\"id is a non-empty string\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('string').and.to.have.length.above(0);",
+                  "});",
+                  "",
+                  "// name is a non-empty string",
+                  "pm.test(\"name is a non-empty string\", function () {",
+                  "    pm.expect(jsonData.name).to.be.a('string').and.to.have.length.above(0);",
+                  "});",
+                  "",
+                  "// data is an object with correct field types",
+                  "pm.test(\"data is an object with correct field types\", function () {",
+                  "    pm.expect(jsonData.data).to.be.an('object');",
+                  "    if (jsonData.data.year !== undefined) {",
+                  "        pm.expect(jsonData.data.year).to.be.a('number');",
+                  "    }",
+                  "    if (jsonData.data.price !== undefined) {",
+                  "        pm.expect(jsonData.data.price).to.be.a('number');",
+                  "    }",
+                  "    if (jsonData.data['CPU model'] !== undefined) {",
+                  "        pm.expect(jsonData.data['CPU model']).to.be.a('string');",
+                  "    }",
+                  "    if (jsonData.data['Hard disk size'] !== undefined) {",
+                  "        pm.expect(jsonData.data['Hard disk size']).to.be.a('string');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Save createdObjectId",
+                  "pm.collectionVariables.set(\"createdObjectId\", jsonData.id);",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "value",
+                  "value": "{{BaseKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "a5ccf554-5878-44d7-8a0d-48554aa16b3a",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Apple MacBook Pro 18\",\r\n  \"data\": {\r\n    \"year\": 2019,\r\n    \"price\": 1849.99,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/objects",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "objects"
+              ]
+            },
+            "description": "Creates a new object in the API. Sends a JSON body with name and data fields. On success, returns the created object with an auto-generated id and createdAt timestamp. The created object's id is saved to the `createdObjectId` collection variable for use in subsequent requests."
+          },
+          "response": []
+        },
+        {
+          "name": "Add a new object Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "// Status 200",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Response time < 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(9875);",
+                  "});",
+                  "",
+                  "// Response is valid JSON",
+                  "pm.test(\"Response is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "// Response has required fields",
+                  "pm.test(\"Response has id, name, createdAt, data fields\", function () {",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('name');",
+                  "    pm.expect(jsonData).to.have.property('createdAt');",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "});",
+                  "",
+                  "// id is a non-empty string",
+                  "pm.test(\"id is a non-empty string\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a('string').and.to.have.length.above(0);",
+                  "});",
+                  "",
+                  "// name is a non-empty string",
+                  "pm.test(\"name is a non-empty string\", function () {",
+                  "    pm.expect(jsonData.name).to.be.a('string').and.to.have.length.above(0);",
+                  "});",
+                  "",
+                  "",
+                  "// data is an object with correct field types",
+                  "pm.test(\"data is an object with correct field types\", function () {",
+                  "    pm.expect(jsonData.data).to.be.an('object');",
+                  "    if (jsonData.data.year !== undefined) {",
+                  "        pm.expect(jsonData.data.year).to.be.a('number');",
+                  "    }",
+                  "    if (jsonData.data.price !== undefined) {",
+                  "        pm.expect(jsonData.data.price).to.be.a('number');",
+                  "    }",
+                  "    if (jsonData.data['CPU model'] !== undefined) {",
+                  "        pm.expect(jsonData.data['CPU model']).to.be.a('string');",
+                  "    }",
+                  "    if (jsonData.data['Hard disk size'] !== undefined) {",
+                  "        pm.expect(jsonData.data['Hard disk size']).to.be.a('string');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Save createdObjectId",
+                  "pm.collectionVariables.set(\"createdObjectId\", jsonData.id);",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "value",
+                  "value": "{{BaseKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "a5ccf554-5878-44d7-8a0d-48554aa16b3a",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Apple windowBook Pro 22\",\r\n  \"data\": {\r\n    \"year\": 2022,\r\n    \"price\": 1959.99,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/objects",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "objects"
+              ]
+            },
+            "description": "Creates a new object in the API. Sends a JSON body with name and data fields. On success, returns the created object with an auto-generated id and createdAt timestamp. The created object's id is saved to the `createdObjectId` collection variable for use in subsequent requests."
+          },
+          "response": []
+        },
+        {
+          "name": "Single Object",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "// Status 200",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Response time < 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(5448);",
+                  "});",
+                  "",
+                  "// Response is valid JSON",
+                  "pm.test(\"Response is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const obj = pm.response.json();",
+                  "",
+                  "",
+                  "// data is an object (if present)",
+                  "pm.test(\"data is an object (if present)\", function () {",
+                  "    if (obj.data !== undefined && obj.data !== null) {",
+                  "        pm.expect(obj.data).to.be.an('object');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Save singleObjectId",
+                  "pm.collectionVariables.set(\"singleObjectId\", String(obj.id));",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/objects?ID=ff8081819d150699019d3261f9863a07",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "objects"
+              ],
+              "query": [
+                {
+                  "key": "ID",
+                  "value": "ff8081819d150699019d3261f9863a07"
+                }
+              ]
+            },
+            "description": "Retrieves a single object by its id from the API. Returns an object with id, name, and data fields. The object's id is saved to the `singleObjectId` collection variable."
+          },
+          "response": []
+        },
+        {
+          "name": "List of All Objects",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "// Status 200",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Response time < 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(26070);",
+                  "});",
+                  "",
+                  "// Response is valid JSON",
+                  "pm.test(\"Response is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const data = pm.response.json();",
+                  "",
+                  "// Response is a non-empty array",
+                  "pm.test(\"Response is a non-empty array\", function () {",
+                  "    pm.expect(data).to.be.an('array').and.to.have.length.above(0);",
+                  "});",
+                  "",
+                  "// Each item has id (string or number), optional name (string), optional data (object)",
+                  "pm.test(\"Each item has id, optional name and optional data with correct types\", function () {",
+                  "    data.forEach(function (item) {",
+                  "        pm.expect(item).to.have.property('id');",
+                  "        pm.expect(item.id).to.satisfy(function (id) {",
+                  "            return typeof id === 'string' || typeof id === 'number';",
+                  "        }, 'id should be string or number');",
+                  "        if (item.name !== undefined) {",
+                  "            pm.expect(item.name).to.be.a('string');",
+                  "        }",
+                  "        if (item.data !== undefined && item.data !== null) {",
+                  "            pm.expect(item.data).to.be.an('object');",
+                  "        }",
+                  "    });",
+                  "});",
+                  "",
+                  "// Save first item's id",
+                  "pm.collectionVariables.set(\"lastObjectId\", String(data[0].id));",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}/objects",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "objects"
+              ]
+            },
+            "description": "Retrieves a list of all objects from the API. Returns an array of objects, each with an id, name, and optional data field. The first object's id is saved to the `lastObjectId` collection variable."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Write Operations",
+      "item": [
+        {
+          "name": "Update an object",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "// Status 200",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Response time < 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(10202);",
+                  "});",
+                  "",
+                  "// Response is valid JSON",
+                  "pm.test(\"Response is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "// Response has required fields",
+                  "pm.test(\"Response has id, name, updatedAt, data fields\", function () {",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('name');",
+                  "    pm.expect(jsonData).to.have.property('updatedAt');",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "});",
+                  "",
+                  "// name is a non-empty string",
+                  "pm.test(\"name is a non-empty string\", function () {",
+                  "    pm.expect(jsonData.name).to.be.a('string').and.to.have.length.above(0);",
+                  "});",
+                  "",
+                  "",
+                  "// data fields have correct types",
+                  "pm.test(\"data fields have correct types\", function () {",
+                  "    pm.expect(jsonData.data).to.be.an('object');",
+                  "    if (jsonData.data.year !== undefined) {",
+                  "        pm.expect(jsonData.data.year).to.be.a('number');",
+                  "    }",
+                  "    if (jsonData.data.price !== undefined) {",
+                  "        pm.expect(jsonData.data.price).to.be.a('number');",
+                  "    }",
+                  "    if (jsonData.data['CPU model'] !== undefined) {",
+                  "        pm.expect(jsonData.data['CPU model']).to.be.a('string');",
+                  "    }",
+                  "    if (jsonData.data['Hard disk size'] !== undefined) {",
+                  "        pm.expect(jsonData.data['Hard disk size']).to.be.a('string');",
+                  "    }",
+                  "});",
+                  "",
+                  "// Save objectId",
+                  "pm.collectionVariables.set(\"objectId\", String(jsonData.id));",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Apple windowBook Pro 17\",\r\n  \"data\": {\r\n    \"year\": 2019,\r\n    \"price\": 2049.99,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\",\r\n    \"color\": \"silver\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/objects/ff8081819d150699019d3b12c87643a9",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "objects",
+                "ff8081819d150699019d3b12c87643a9"
+              ]
+            },
+            "description": "Fully replaces an existing object (id: 7) with the provided payload. Returns the updated object with an updatedAt timestamp. All fields must be provided in the request body."
+          },
+          "response": []
+        },
+        {
+          "name": "Partially update an object",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "// Status 200",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Response time < 2000ms",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Response is valid JSON",
+                  "pm.test(\"Response is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "// Response has id, name, updatedAt",
+                  "pm.test(\"Response has id, name, updatedAt fields\", function () {",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('name');",
+                  "    pm.expect(jsonData).to.have.property('updatedAt');",
+                  "});",
+                  "",
+                  "// Patched field \"name\" is reflected in response",
+                  "pm.test(\"Patched field 'name' is reflected in response\", function () {",
+                  "    pm.expect(jsonData.name).to.be.a('string').and.to.have.length.above(0);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"name\": \"Apple MacBook Max 20\",\r\n    \"createdAt\": 1774802065010,\r\n    \"data\": {\r\n        \"year\": 2019,\r\n        \"price\": 1849.99,\r\n        \"CPU model\": \"Intel Core i9\",\r\n        \"Hard disk size\": \"1 TB\"\r\n    }\r\n} ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseUrl}}/objects/ff8081819d150699019d3b12c87643a9",
+              "host": [
+                "{{BaseUrl}}"
+              ],
+              "path": [
+                "objects",
+                "ff8081819d150699019d3b12c87643a9"
+              ]
+            },
+            "description": "Partially updates an existing object (id: 7). Only the fields provided in the request body are updated. Returns the updated object with an updatedAt timestamp."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "",
+          "(function () {",
+          "    const resolved = pm.variables.get('BaseUrl');",
+          "    const hasValue = (typeof resolved === 'string') && resolved.trim().length > 0;",
+          "",
+          "    if (!hasValue || !resolved.trim().toLowerCase().startsWith('http')) {",
+          "        const example = 'https://api.restful-api.dev';",
+          "        const msg = `Missing/invalid BaseUrl.\\n\\nSet variable \"BaseUrl\" in the collection variables or active environment.\\nExample: ${example}`;",
+          "",
+          "        pm.execution.setNextRequest(null);",
+          "",
+          "        pm.test('BaseUrl must be set (fail fast)', function () {",
+          "            pm.expect.fail(msg);",
+          "        });",
+          "",
+          "        return;",
+          "    }",
+          "",
+          "    const normalized = resolved.trim().replace(/\\/+$/, '');",
+          "    pm.collectionVariables.set('BaseUrl', normalized);",
+          "",
+          "    console.log(`[${new Date().toISOString()}] Running request: \"${pm.info.requestName}\"`);",
+          "})();",
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseUrl",
+      "value": ""
+    },
+    {
+      "key": "BaseKey",
+      "value": ""
+    },
+    {
+      "key": "lastObjectId",
+      "value": ""
+    },
+    {
+      "key": "singleObjectId",
+      "value": ""
+    },
+    {
+      "key": "createdObjectId",
+      "value": ""
+    },
+    {
+      "key": "objectId",
+      "value": ""
+    }
+  ]
+}

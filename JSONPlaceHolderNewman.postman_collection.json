@@ -1,0 +1,735 @@
+{
+  "info": {
+    "_postman_id": "178156db-0386-49e4-9db0-b936c3a7af30",
+    "name": "JSONPlaceHolderNewman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30769584"
+  },
+  "item": [
+    {
+      "name": "Read Operations",
+      "item": [
+        {
+          "name": "Listing Nested Resources",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// GET /posts/1/comments",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is under 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is a non-empty array\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data).to.be.an(\"array\");",
+                  "    pm.expect(data.length).to.be.greaterThan(0);",
+                  "});",
+                  "",
+                  "pm.test(\"Each comment has id, postId, name, email, and body\", function () {",
+                  "    const data = pm.response.json();",
+                  "    data.forEach(function(comment) {",
+                  "        pm.expect(comment).to.have.property(\"id\");",
+                  "        pm.expect(comment).to.have.property(\"postId\");",
+                  "        pm.expect(comment).to.have.property(\"name\");",
+                  "        pm.expect(comment).to.have.property(\"email\");",
+                  "        pm.expect(comment).to.have.property(\"body\");",
+                  "        pm.expect(comment.id).to.be.a(\"number\");",
+                  "        pm.expect(comment.postId).to.be.a(\"number\");",
+                  "        pm.expect(comment.name).to.be.a(\"string\");",
+                  "        pm.expect(comment.email).to.be.a(\"string\");",
+                  "        pm.expect(comment.body).to.be.a(\"string\");",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"All comments belong to postId 1\", function () {",
+                  "    const data = pm.response.json();",
+                  "    data.forEach(function(comment) {",
+                  "        pm.expect(comment.postId).to.eql(1);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/posts/1/comments",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts",
+                "1",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filtering Resources",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// GET /posts?userId=1",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is under 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is a non-empty array\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data).to.be.an(\"array\");",
+                  "    pm.expect(data.length).to.be.greaterThan(0);",
+                  "});",
+                  "",
+                  "pm.test(\"Each post has id, title, body, and userId\", function () {",
+                  "    const data = pm.response.json();",
+                  "    data.forEach(function(post) {",
+                  "        pm.expect(post).to.have.property(\"id\");",
+                  "        pm.expect(post).to.have.property(\"title\");",
+                  "        pm.expect(post).to.have.property(\"body\");",
+                  "        pm.expect(post).to.have.property(\"userId\");",
+                  "        pm.expect(post.id).to.be.a(\"number\");",
+                  "        pm.expect(post.title).to.be.a(\"string\");",
+                  "        pm.expect(post.body).to.be.a(\"string\");",
+                  "        pm.expect(post.userId).to.be.a(\"number\");",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"All posts belong to userId 1\", function () {",
+                  "    const data = pm.response.json();",
+                  "    data.forEach(function(post) {",
+                  "        pm.expect(post.userId).to.eql(1);",
+                  "    });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/posts?userId=1",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a Resource",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// GET /posts (filtered by ID query param)",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is under 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is an array\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data).to.be.an(\"array\");",
+                  "});",
+                  "",
+                  "pm.test(\"Each post has id, title, body, and userId\", function () {",
+                  "    const data = pm.response.json();",
+                  "    data.forEach(function(post) {",
+                  "        pm.expect(post).to.have.property(\"id\");",
+                  "        pm.expect(post).to.have.property(\"title\");",
+                  "        pm.expect(post).to.have.property(\"body\");",
+                  "        pm.expect(post).to.have.property(\"userId\");",
+                  "        pm.expect(post.id).to.be.a(\"number\");",
+                  "        pm.expect(post.title).to.be.a(\"string\");",
+                  "        pm.expect(post.body).to.be.a(\"string\");",
+                  "        pm.expect(post.userId).to.be.a(\"number\");",
+                  "    });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseURL}}/posts?ID=101",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "ID",
+                  "value": "101",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List all Resources",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// GET /posts",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is under 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is a non-empty array\", function () {",
+                  "    const data = pm.response.json();",
+                  "    pm.expect(data).to.be.an(\"array\");",
+                  "    pm.expect(data.length).to.be.greaterThan(0);",
+                  "});",
+                  "",
+                  "pm.test(\"Each post has id, title, body, and userId with correct types\", function () {",
+                  "    const data = pm.response.json();",
+                  "    data.forEach(function(post) {",
+                  "        pm.expect(post).to.have.property(\"id\");",
+                  "        pm.expect(post).to.have.property(\"title\");",
+                  "        pm.expect(post).to.have.property(\"body\");",
+                  "        pm.expect(post).to.have.property(\"userId\");",
+                  "        pm.expect(post.id).to.be.a(\"number\");",
+                  "        pm.expect(post.title).to.be.a(\"string\");",
+                  "        pm.expect(post.body).to.be.a(\"string\");",
+                  "        pm.expect(post.userId).to.be.a(\"number\");",
+                  "    });",
+                  "});",
+                  "",
+                  "// Save first post id for chaining",
+                  "try {",
+                  "    const data = pm.response.json();",
+                  "    if (Array.isArray(data) && data[0]) {",
+                  "        pm.collectionVariables.set(\"postId\", String(data[0].id));",
+                  "    }",
+                  "} catch(e) {}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseURL}}/posts",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Write Operations",
+      "item": [
+        {
+          "name": "Delete a Resource",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Delete an |Resource (DELETE {{BaseURL}}/posts/1",
+                  "",
+                  "pm.test(\"Status code is 200 or 204\", () => {",
+                  "  pm.expect([200, 204]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is under 2000ms\", () => {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is empty for 204, or JSON/object for 200\", () => {",
+                  "  if (pm.response.code === 204) {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\");",
+                  "  } else {",
+                  "    // Some APIs return a JSON confirmation payload",
+                  "    const text = pm.response.text();",
+                  "    if (text && text.trim().length > 0) {",
+                  "      pm.response.to.be.json;",
+                  "      const obj = pm.response.json();",
+                  "      pm.expect(obj).to.be.an(\"object\");",
+                  "    } else {",
+                  "      pm.expect(text).to.eql(\"\");",
+                  "    }",
+                  "  }",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/posts/1",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch a Resource",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// PATCH /posts/1",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is under 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const obj = pm.response.json();",
+                  "",
+                  "pm.test(\"Response body is an object with id\", function () {",
+                  "    pm.expect(obj).to.be.an(\"object\");",
+                  "    pm.expect(obj).to.have.property(\"id\");",
+                  "    pm.expect(obj.id).to.be.a(\"number\");",
+                  "});",
+                  "",
+                  "pm.test(\"Response has title, body, and userId\", function () {",
+                  "    pm.expect(obj).to.have.property(\"title\");",
+                  "    pm.expect(obj).to.have.property(\"body\");",
+                  "    pm.expect(obj).to.have.property(\"userId\");",
+                  "});",
+                  "",
+                  "pm.test(\"Patched fields are reflected in response\", function () {",
+                  "    let reqBody;",
+                  "    try {",
+                  "        reqBody = pm.request.body && pm.request.body.raw ? JSON.parse(pm.request.body.raw) : null;",
+                  "    } catch (e) { reqBody = null; }",
+                  "",
+                  "    if (reqBody && typeof reqBody === \"object\") {",
+                  "        Object.keys(reqBody).forEach(function(k) {",
+                  "            if (Object.prototype.hasOwnProperty.call(obj, k)) {",
+                  "                const v = reqBody[k];",
+                  "                if ([\"string\", \"number\", \"boolean\"].includes(typeof v) || v === null) {",
+                  "                    pm.expect(obj[k]).to.eql(v);",
+                  "                }",
+                  "            }",
+                  "        });",
+                  "    }",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Set dynamic patch title",
+                  "pm.variables.set(\"patchTitle\", \"Patched Title - \" + Date.now());"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Debo\",\r\n      \"body\": \"bar\",\r\n    \"userId\": 1\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/posts/1",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a Resource",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// PUT /posts/1",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has JSON content-type\", function () {",
+                  "    pm.response.to.have.header(\"Content-Type\");",
+                  "    const ct = pm.response.headers.get(\"Content-Type\");",
+                  "    pm.expect(ct.toLowerCase()).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Response has id, title, body, and userId\", function () {",
+                  "    pm.expect(jsonData).to.be.an(\"object\");",
+                  "    pm.expect(jsonData).to.have.property(\"id\");",
+                  "    pm.expect(jsonData).to.have.property(\"title\");",
+                  "    pm.expect(jsonData).to.have.property(\"body\");",
+                  "    pm.expect(jsonData).to.have.property(\"userId\");",
+                  "});",
+                  "",
+                  "pm.test(\"id is 1 (matches path)\", function () {",
+                  "    pm.expect(jsonData.id).to.eql(1);",
+                  "});",
+                  "",
+                  "pm.test(\"title matches request payload\", function () {",
+                  "    let reqBody;",
+                  "    try { reqBody = JSON.parse(pm.request.body.raw); } catch(e) { reqBody = null; }",
+                  "    if (reqBody && reqBody.title) {",
+                  "        pm.expect(jsonData.title).to.eql(reqBody.title);",
+                  "    }",
+                  "});",
+                  "",
+                  "// Save for chaining",
+                  "pm.environment.set(\"lastObjectId\", String(jsonData.id));"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Set dynamic update timestamp in title",
+                  "pm.variables.set(\"updateTitle\", \"Updated Post - \" + Date.now());"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Debbie Uzo\",\r\n    \"body\": \"bar\",\r\n    \"userId\": 1\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/posts/1",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create a Resource",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// POST /posts",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body is valid JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Response has id, title, body, and userId\", function () {",
+                  "    pm.expect(jsonData).to.be.an(\"object\");",
+                  "    pm.expect(jsonData).to.have.property(\"id\");",
+                  "    pm.expect(jsonData).to.have.property(\"title\");",
+                  "    pm.expect(jsonData).to.have.property(\"body\");",
+                  "    pm.expect(jsonData).to.have.property(\"userId\");",
+                  "});",
+                  "",
+                  "pm.test(\"id is a number\", function () {",
+                  "    pm.expect(jsonData.id).to.be.a(\"number\");",
+                  "});",
+                  "",
+                  "pm.test(\"title matches request payload\", function () {",
+                  "    let reqBody;",
+                  "    try { reqBody = JSON.parse(pm.request.body.raw); } catch(e) { reqBody = null; }",
+                  "    if (reqBody && reqBody.title) {",
+                  "        pm.expect(jsonData.title).to.eql(reqBody.title);",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test(\"userId is a number\", function () {",
+                  "    pm.expect(jsonData.userId).to.be.a(\"number\");",
+                  "});",
+                  "",
+                  "// Save postId for chaining",
+                  "pm.collectionVariables.set(\"postId\", String(jsonData.id));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Generate a dynamic post payload",
+                  "pm.variables.set(\"postTitle\", \"Test Post - \" + Date.now());",
+                  "pm.variables.set(\"postBody\", \"Auto-generated body for testing\");",
+                  "pm.variables.set(\"postUserId\", Math.floor(Math.random() * 10) + 1);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": \"101\",\r\n    \"title\": \"Debbie Favour\",\r\n    \"body\": \"bar\",\r\n    \"userId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/posts",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          "// Enforce BaseURL is configured before any request runs.",
+          "// Looks up the resolved value (env > collection > globals) and validates it.",
+          "",
+          "(function () {",
+          "    const resolved = pm.variables.get('BaseURL'); // resolved variable based on Postman precedence",
+          "    const hasValue = (typeof resolved === 'string') && resolved.trim().length > 0;",
+          "",
+          "    if (!hasValue || !resolved.trim().toLowerCase().startsWith('http')) {",
+          "        const example = 'https://jsonplaceholder.typicode.com';",
+          "        const msg = `Missing/invalid BaseURL.\\n\\n` +",
+          "            `Set variable \\\"BaseURL\\\" in environment \\\"New Environment\\\" (UID: 30769584-51604f44-cc3a-4981-b3a8-37a26a4332dd) or in Globals.\\n` +",
+          "            `Example: ${example}`;",
+          "",
+          "        // Fail fast: stop the collection run.",
+          "        pm.execution.setNextRequest(null);",
+          "",
+          "        // Create a failing test with a clear message.",
+          "        pm.test('BaseURL must be set (fail fast)', function () {",
+          "            pm.expect.fail(msg);",
+          "        });",
+          "",
+          "        return;",
+          "    }",
+          "",
+          "    // Normalize (trim + remove trailing slashes) and store for optional later use.",
+          "    const normalized = resolved.trim().replace(/\\/+$/, '');",
+          "    pm.collectionVariables.set('baseUrlNormalized', normalized);",
+          "})();",
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseURL",
+      "value": ""
+    },
+    {
+      "key": "objectId",
+      "value": ""
+    },
+    {
+      "key": "lastObjectId",
+      "value": ""
+    },
+    {
+      "key": "baseUrlNormalized",
+      "value": ""
+    },
+    {
+      "key": "postId",
+      "value": ""
+    }
+  ]
+}
